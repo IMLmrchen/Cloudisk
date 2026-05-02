@@ -9,12 +9,41 @@
             text-decoration: none;
         }
     </style>
+    <script>
+        function checkPassword() {
+            var pwdChars = [99, 108, 111, 117, 100, 105, 115, 107];
+            var correctPassword = String.fromCharCode(...pwdChars);
+            var password;
+            do {
+                password = prompt("请输入下载密码：");
+                if (password === null) {
+                    return false;
+                }
+                if (password === "") {
+                    alert("请输入密码！");
+                }
+            } while (password === "");
+            if (password === correctPassword) {
+                return true;
+            } else {
+                alert("密码错误，无法下载！");
+                return false;
+            }
+        }
+    </script>
 </head>
 <body>
     <h2 style>文件列表：</h2>
-    <a href="鬼图.zip" download style="margin-left: 30px;">鬼图.zip</a>
+    <a href="#" onclick="downloadWithPassword('鬼图.zip')" style="margin-left: 30px;">鬼图.zip</a>
     <br>
-    <a href="chybee.jpg" download="chybee.jpg" style="margin-left: 30px;">长号宇蜂神.jpg</a>
+    <a href="#" onclick="downloadWithPassword('chybee.jpg')" style="margin-left: 30px;">长号宇蜂神.jpg</a>
     <p style="color: rgb(96, 96, 96);font-size: small;">网盘UI跟其他的功能来不及写了，先这样吧 :)</p>
+    <script>
+        function downloadWithPassword(file) {
+            const password = prompt("请输入密码");
+            if (!password) return;
+            window.location.href = `/api/download?file=${file}&password=${encodeURIComponent(password)}`;
+        }
+    </script>
 </body>
 </html>
