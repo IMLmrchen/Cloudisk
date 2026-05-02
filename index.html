@@ -9,28 +9,6 @@
             text-decoration: none;
         }
     </style>
-    <script>
-        function checkPassword() {
-            var pwdChars = [99, 108, 111, 117, 100, 105, 115, 107];
-            var correctPassword = String.fromCharCode(...pwdChars);
-            var password;
-            do {
-                password = prompt("请输入下载密码：");
-                if (password === null) {
-                    return false;
-                }
-                if (password === "") {
-                    alert("请输入密码！");
-                }
-            } while (password === "");
-            if (password === correctPassword) {
-                return true;
-            } else {
-                alert("密码错误，无法下载！");
-                return false;
-            }
-        }
-    </script>
 </head>
 <body>
     <h2 style>文件列表：</h2>
