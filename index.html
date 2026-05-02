@@ -15,13 +15,27 @@
     <a href="#" onclick="downloadWithPassword('gt.zip')" style="margin-left: 30px;">鬼图.zip</a>
     <br>
     <a href="#" onclick="downloadWithPassword('chybee.jpg')" style="margin-left: 30px;">长号宇蜂神.jpg</a>
-    <p style="color: rgb(96, 96, 96);font-size: small;">当下载图片时，请在点击链接并输入密码后，在打开的图片上按右键或者长按选择另存为或者下载到本地来下载。</p>
     <p style="color: rgb(96, 96, 96);font-size: small;">网盘UI跟其他的功能来不及写了，先这样吧 :)</p>
     <script>
         function downloadWithPassword(file) {
             const password = prompt("请输入密码");
             if (!password) return;
-            window.location.href = `/api/download?file=${file}&password=${encodeURIComponent(password)}`;
+            const url = `/api/download?file=${file}&password=${encodeURIComponent(password)}`;
+            
+            fetch(url, { redirect: 'manual' })
+              .then(response => {
+                if (response.status === 302) {
+                  const redirectUrl = response.headers.get('Location');
+                  window.location.href = redirectUrl;
+                } else {
+                  return response.text().then(text => {
+                    alert(text);
+                  });
+                }
+              })
+              .catch(() => {
+                alert('请求失败，请重试');
+              });
         }
     </script>
 </body>
