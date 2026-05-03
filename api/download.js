@@ -13,7 +13,8 @@ module.exports = (req, res) => {
     return;
   }
 
-  // 标准重定向
-  res.writeHead(302, { 'Location': `/files/${file}` });
+
+  res.statusCode = 302;
+  res.setHeader('Location', `/files/${file}`);
   res.end();
 };
