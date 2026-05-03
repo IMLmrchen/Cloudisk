@@ -1,46 +1,52 @@
 <!DOCTYPE html>
 <html lang="zh">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cloudisk</title>
-    <style>
-        a{
-            text-decoration: none;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cloudisk</title>
+  <style>
+    a {
+      text-decoration: none;
+    }
+  </style>
 </head>
+
 <body>
-    <h2 style>文件列表：</h2>
-    <a href="#" onclick="downloadWithPassword('gt.zip')" style="margin-left: 30px;">鬼图.zip</a>
-    <br>
-    <a href="#" onclick="downloadWithPassword('chybee.jpg')" style="margin-left: 30px;">长号宇蜂神.jpg</a>
-    <p style="color: rgb(96, 96, 96);font-size: small;">网盘UI跟其他的功能来不及写了，先这样吧 :)</p>
-    <script>
-        function downloadWithPassword(file) {
-            const password = prompt("请输入密码");
-            if (!password) return;
-            const url = `/api/download?file=${file}&password=${encodeURIComponent(password)}`;
-            
-            fetch(url, { redirect: 'manual' })
-              .then(response => {
-                if (response.status === 302) {
-                  const redirectUrl = response.headers.get('Location');
-                  if (redirectUrl) {
-                    window.location.href = redirectUrl;
-                  } else {
-                    alert('重定向链接无效，请联系管理员');
-                  }
-                } else {
-                  return response.text().then(text => {
-                    alert(text || '未知错误，请重试');
-                  });
-                }
-              })
-              .catch(() => {
-                alert('请求失败，请检查网络连接');
-              });
-        }
-    </script>
+  <h3 style="margin-left: 20px; margin-top: 10px;">文件列表：</h3>
+  <a href="#" onclick="downloadWithPassword('鬼图.zip')" style="margin-left: 40px;text-decoration: none;">鬼图.zip</a>
+  <br>
+  <a href="#" onclick="downloadWithPassword('chybee.jpg')"
+    style="margin-left: 40px; text-decoration: none;">长号宇蜂神.jpg</a>
+  <p style="color: rgb(96, 96, 96);font-size: small;">网盘UI跟其他的功能来不及写了，先这样吧 :)</p>
+
+  <script>
+    function downloadWithPassword(file) {
+      const password = prompt("请输入密码");
+      if (!password) return;
+      window.location.href = `/api/download?file=${file}&password=${encodeURIComponent(password)}`;
+
+      fetch(url, { redirect: 'manual' })
+        .then(response => {
+          if (response.status === 302) {
+            const redirectUrl = response.headers.get('Location');
+            if (redirectUrl) {
+              window.location.href = redirectUrl;
+            } else {
+              alert('重定向链接无效，请联系管理员');
+            }
+          } else {
+            return response.text().then(text => {
+              alert(text || '未知错误，请重试');
+            });
+          }
+        })
+        .catch(() => {
+          alert('请求失败，请检查网络连接');
+        });
+    }
+  </script>
+
 </body>
+
 </html>
