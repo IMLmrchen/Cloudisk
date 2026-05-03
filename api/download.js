@@ -1,10 +1,10 @@
 // Vercel Serverless Function for password-protected downloads
 module.exports = (req, res) => {
   const { file, password } = req.query;
-  const correctPassword = 'cloudisk';
+  const correctPassword = 'chy1216tk91';
 
   if (!password) {
-    res.status(401).send('未提供密码');
+    res.status(403).send('未提供密码');
     return;
   }
 
